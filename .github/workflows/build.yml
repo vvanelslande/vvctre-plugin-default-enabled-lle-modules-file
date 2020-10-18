@@ -19,14 +19,9 @@ jobs:
         uses: actions/checkout@v2
       - uses: ilammy/msvc-dev-cmd@v1
       - name: Build
+        working-directory: ./build
         shell: bash
-        run: |
-          cd $GITHUB_WORKSPACE
-          if [ "$RUNNER_OS" == "Windows" ]; then
-            cl.exe //LD //Fe:default-enabled-lle-modules-file.dll plugin.cpp
-          else
-            g++ plugin.cpp -shared -o default-enabled-lle-modules-file.so -fPIC
-          fi
+        run: cmake --build . --config Release
       - name: Prepare to upload
         if: github.event_name == 'push'
         shell: bash
@@ -35,8 +30,10 @@ jobs:
           export VERSION=${GITHUB_REF:10}
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           if [ "$RUNNER_OS" == "Windows" ]; then
+            mv ./build/bin/Release/default-enabled-lle-modules-file.dll .
             7z a vvctre-plugin-default-enabled-lle-modules-file-$VERSION-${{runner.os}}.7z default-enabled-lle-modules-file.dll license.txt default-enabled-lle-modules.txt
           else
+            mv ./build/bin/Release/default-enabled-lle-modules-file.so .
             7z a vvctre-plugin-default-enabled-lle-modules-file-$VERSION-${{runner.os}}.7z default-enabled-lle-modules-file.so license.txt default-enabled-lle-modules.txt
           fi
       - name: Upload to GitHub Releases
