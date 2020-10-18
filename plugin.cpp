@@ -6,6 +6,10 @@
 #include <iostream>
 #include <string>
 
+#include <whereami.h>
+
+#include "string_util.h"
+
 #ifdef _WIN32
 #define VVCTRE_PLUGIN_EXPORT extern "C" __declspec(dllexport)
 #else
@@ -32,7 +36,18 @@ VVCTRE_PLUGIN_EXPORT void PluginLoaded(void* core, void* plugin_manager,
 }
 
 VVCTRE_PLUGIN_EXPORT void InitialSettingsOpening() {
-    std::ifstream file("default-enabled-lle-modules.txt");
+    int length = wai_getExecutablePath(nullptr, 0, nullptr);
+    std::string vvctre_folder(length, '\0');
+    int dirname_length = 0;
+    wai_getExecutablePath(&vvctre_folder[0], length, &dirname_length);
+    vvctre_folder = vvctre_folder.substr(0, dirname_length);
+
+    std::ifstream file;
+#ifdef _MSC_VER
+    file.open(Common::UTF8ToUTF16W(vvctre_folder + "\\default-enabled-lle-modules.txt"));
+#else
+    file.open(vvctre_folder + "/default-enabled-lle-modules.txt");
+#endif
     if (!file.fail()) {
         std::string line;
         while (std::getline(file, line)) {
