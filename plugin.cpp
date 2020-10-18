@@ -4,6 +4,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <string>
 
 #ifdef _WIN32
 #define VVCTRE_PLUGIN_EXPORT extern "C" __declspec(dllexport)
@@ -26,7 +27,8 @@ VVCTRE_PLUGIN_EXPORT const char** GetRequiredFunctionNames() {
 
 VVCTRE_PLUGIN_EXPORT void PluginLoaded(void* core, void* plugin_manager_,
                                        void* required_functions[]) {
-    vvctre_settings_set_use_lle_module = (vvctre_settings_set_use_lle_module_t)required_functions[0];
+    vvctre_settings_set_use_lle_module =
+        (vvctre_settings_set_use_lle_module_t)required_functions[0];
 }
 
 VVCTRE_PLUGIN_EXPORT void InitialSettingsOpening() {
