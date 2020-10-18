@@ -32,7 +32,7 @@ VVCTRE_PLUGIN_EXPORT void PluginLoaded(void* core, void* plugin_manager,
 }
 
 VVCTRE_PLUGIN_EXPORT void InitialSettingsOpening() {
-    std::ifstream file("enabled-lle-modules.txt");
+    std::ifstream file("default-enabled-lle-modules.txt");
     if (!file.fail()) {
         std::string line;
         while (std::getline(file, line)) {
