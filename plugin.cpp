@@ -25,7 +25,7 @@ VVCTRE_PLUGIN_EXPORT const char** GetRequiredFunctionNames() {
     return &required_function_name;
 }
 
-VVCTRE_PLUGIN_EXPORT void PluginLoaded(void* core, void* plugin_manager_,
+VVCTRE_PLUGIN_EXPORT void PluginLoaded(void* core, void* plugin_manager,
                                        void* required_functions[]) {
     vvctre_settings_set_use_lle_module =
         (vvctre_settings_set_use_lle_module_t)required_functions[0];
