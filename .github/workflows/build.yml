@@ -23,9 +23,9 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE
           if [ "$RUNNER_OS" == "Windows" ]; then
-            cl.exe //LD //Fe:enabled-lle-modules-file.dll plugin.cpp
+            cl.exe //LD //Fe:default-enabled-lle-modules-file.dll plugin.cpp
           else
-            g++ plugin.cpp -shared -o enabled-lle-modules-file.so -fPIC
+            g++ plugin.cpp -shared -o default-enabled-lle-modules-file.so -fPIC
           fi
       - name: Prepare to upload
         if: github.event_name == 'push'
@@ -35,22 +35,22 @@ jobs:
           export VERSION=${GITHUB_REF:10}
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           if [ "$RUNNER_OS" == "Windows" ]; then
-            7z a vvctre-plugin-enabled-lle-modules-file-$VERSION-${{runner.os}}.7z enabled-lle-modules-file.dll license.txt enabled-lle-modules.txt
+            7z a vvctre-plugin-default-enabled-lle-modules-file-$VERSION-${{runner.os}}.7z default-enabled-lle-modules-file.dll license.txt default-enabled-lle-modules.txt
           else
-            7z a vvctre-plugin-enabled-lle-modules-file-$VERSION-${{runner.os}}.7z enabled-lle-modules-file.so license.txt enabled-lle-modules.txt
+            7z a vvctre-plugin-default-enabled-lle-modules-file-$VERSION-${{runner.os}}.7z default-enabled-lle-modules-file.so license.txt default-enabled-lle-modules.txt
           fi
       - name: Upload to GitHub Releases
         if: github.event_name == 'push'
         uses: svenstaro/upload-release-action@v1-release
         with:
           repo_token: ${{secrets.GITHUB_TOKEN}}
-          file: vvctre-plugin-enabled-lle-modules-file-${{env.VERSION}}-${{runner.os}}.7z
-          asset_name: vvctre-plugin-enabled-lle-modules-file-${{env.VERSION}}-${{runner.os}}.7z
+          file: vvctre-plugin-default-enabled-lle-modules-file-${{env.VERSION}}-${{runner.os}}.7z
+          asset_name: vvctre-plugin-default-enabled-lle-modules-file-${{env.VERSION}}-${{runner.os}}.7z
           tag: ${{github.ref}}
           overwrite: true
       - name: Upload artifact
         if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@v1
         with:
-          name: vvctre-plugin-enabled-lle-modules-file-${{runner.os}}
+          name: vvctre-plugin-default-enabled-lle-modules-file-${{runner.os}}
           path: .
