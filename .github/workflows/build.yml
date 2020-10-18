@@ -18,6 +18,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - uses: ilammy/msvc-dev-cmd@v1
+      - name: Configure CMake
+        shell: bash
+        run: |
+          cd $GITHUB_WORKSPACE
+          mkdir build && cd build
+          cmake .. -DCMAKE_BUILD_TYPE=Release
       - name: Build
         working-directory: ./build
         shell: bash
