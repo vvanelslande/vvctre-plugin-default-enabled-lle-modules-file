@@ -44,9 +44,9 @@ VVCTRE_PLUGIN_EXPORT void InitialSettingsOpening() {
 
     std::ifstream file;
 #ifdef _MSC_VER
-    file.open(Common::UTF8ToUTF16W(vvctre_folder + "\\default-enabled-lle-modules.txt"));
+    file.open(Common::UTF8ToUTF16W(vvctre_folder + "\\enable-lle-modules-in-file-when-starting.txt"));
 #else
-    file.open(vvctre_folder + "/default-enabled-lle-modules.txt");
+    file.open(vvctre_folder + "/enable-lle-modules-in-file-when-starting.txt");
 #endif
     if (!file.fail()) {
         std::string line;
