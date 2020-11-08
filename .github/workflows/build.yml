@@ -38,10 +38,10 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           if [ "$RUNNER_OS" == "Windows" ]; then
             mv ./build/bin/Release/enable-lle-modules-in-file-when-starting.dll .
-            7z a vvctre-plugin-enable-lle-modules-in-file-when-starting-$VERSION-${{runner.os}}.7z enable-lle-modules-in-file-when-starting.dll license.txt default-enabled-lle-modules.txt
+            7z a vvctre-plugin-enable-lle-modules-in-file-when-starting-$VERSION-${{runner.os}}.7z enable-lle-modules-in-file-when-starting.dll license.txt
           else
             mv ./build/bin/Release/enable-lle-modules-in-file-when-starting.so .
-            7z a vvctre-plugin-enable-lle-modules-in-file-when-starting-$VERSION-${{runner.os}}.7z enable-lle-modules-in-file-when-starting.so license.txt default-enabled-lle-modules.txt
+            7z a vvctre-plugin-enable-lle-modules-in-file-when-starting-$VERSION-${{runner.os}}.7z enable-lle-modules-in-file-when-starting.so license.txt
           fi
       - name: Upload to GitHub Releases
         if: github.event_name == 'push'
